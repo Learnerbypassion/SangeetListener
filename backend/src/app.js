@@ -14,8 +14,8 @@ app.use(cors({
 }))
 app.use(cookieParser())
 app.use('/api/auth', authRoutes);
-app.use('/api/auth', authRoutes);
 app.use('/api/music', musicRoutes);
+
 
 
 app.get('/',(req, res)=>{

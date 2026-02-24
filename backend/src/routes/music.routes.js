@@ -9,5 +9,6 @@ const upload = multer({
 })
 
 router.post('/upload-music', upload.single("music"),  musicController.addingMusic )
+router.get('/list-musics', musicController.listOfMusic)
 
 export default router;

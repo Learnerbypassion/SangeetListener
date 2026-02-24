@@ -11,8 +11,7 @@ const App = () => {
         <Route path="/" element= { <LandingPage/>}/>
         <Route path="/api/auth/login" element= { <Login/>}/>
         <Route path="/api/auth/register" element= { <RegisterPage/> }/>
-        <Route path="/api/music/upload-music" element= { <ShowMusicPages/> }/>
-
+        <Route path="/api/music/list-musics" element= { <ShowMusicPages/> }/>
       </Routes>
     </Router>
   );

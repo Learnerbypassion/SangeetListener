@@ -25,8 +25,8 @@ const Login = () => {
 			console.log(role);
 			
 		}else{
-			console.log("Navigator has to be SET up", role);
 			console.log(role);
+      navigate("/api/music/list-musics");
 			setError("")
 		}
         setEmail("");

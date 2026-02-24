@@ -37,4 +37,12 @@ const addingMusic = async (req, res) => {
     }
 }
 
-export default { addingMusic }
+
+const listOfMusic = async (req,res) =>{
+    const musics = await musicModel.find();
+    res.send({
+        message: "This are the musics",
+        musics: musics
+    })
+}
+export default { addingMusic, listOfMusic }
