@@ -5,13 +5,16 @@ import ArtistNavbar from "../components/ArtistNavbar.jsx";
 
 const ShowMusicPages = () => {
   const [data, setData] = useState([]);
-
+  const [loader, setLoader] = useState(true);
   useEffect(() => {
     const fetchMusic = async () => {
       try {
         const res = await axios.get(
           `${import.meta.env.VITE_BACKEND_URI}/api/music/list-musics`
-        );
+        )
+        .finally(()=>{
+          setLoader(false);
+        })
         setData(res.data.musics);
       } catch (error) {
         console.log(error);
@@ -19,6 +22,14 @@ const ShowMusicPages = () => {
     };
     fetchMusic();
   }, []);
+  if (loader) {
+    return (
+      <div className="loader-container w-full flex-col h-screen flex justify-center items-center">
+        <div className="spinner animate-spin text-4xl w-8 h-8 border-2 border-dotted rounded-full"></div>
+        <p>Loading posts...</p>
+      </div>
+    );
+  }
 
   return (
     <div className=" h-screen w-full">

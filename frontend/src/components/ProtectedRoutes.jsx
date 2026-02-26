@@ -30,7 +30,14 @@ const ProtectedRoute = ({ children, role }) => {
     verifyUser();
   }, [role]);
 
-  if (loading) return <div className="text-white p-10">Checking auth...</div>;
+  if (loading) {
+    return (
+      <div className="loader-container w-full flex-col h-screen flex justify-center items-center">
+        <div className="spinner animate-spin text-4xl w-8 h-8 border-2 border-dotted rounded-full"></div>
+        <p>Authenticating...</p>
+      </div>
+    );
+  }
 
   return authorized ? children : <Navigate to="/api/auth/login" />;
 };
