@@ -57,7 +57,7 @@ const ArtistNavbar = () => {
             {/* Logout Button */}
             <button
               onClick={handleLogout}
-              className="bg-red-600 hover:bg-red-700 transition px-4 py-1.5 rounded-lg text-white text-sm font-semibold"
+              className="bg-red-600 cursor-pointer hover:bg-red-700 transition px-4 py-1.5 rounded-lg text-white text-sm font-semibold"
             >
               Logout
             </button>
