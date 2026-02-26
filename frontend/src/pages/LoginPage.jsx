@@ -10,7 +10,6 @@ const Login = () => {
   const navigate = useNavigate();
   const submitHandler = async (e) => {
     e.preventDefault();
-    console.log("Form is submitted");
     axios
       .post(
         `${import.meta.env.VITE_BACKEND_URI}/api/auth/login`,

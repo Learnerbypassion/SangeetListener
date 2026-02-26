@@ -12,10 +12,12 @@ const MusicCards = ({
   return (
     <div className="flex items-center justify-center group">
       <div className="relative w-80">
-        <div className="absolute -inset-1 rounded-2xl bg-linear-to-r 
+        <div
+          className="absolute -inset-1 rounded-2xl bg-linear-to-r 
                         from-fuchsia-300 via-teal-400 to-lime-200 
                         opacity-0 group-hover:opacity-100 
-                        blur-md transition duration-300"></div>
+                        blur-md transition duration-300"
+        ></div>
 
         {/* 🎵 Card */}
         <div
@@ -45,6 +47,14 @@ const MusicCards = ({
             src={uri}
             controls
             className="w-full rounded-lg mb-4"
+            onPlay={(e) => {
+              const audios = document.querySelectorAll("audio");
+              audios.forEach((audio) => {
+                if (audio !== e.target) {
+                  audio.pause();
+                }
+              });
+            }}
           />
 
           {/* Actions */}

@@ -37,7 +37,7 @@ const ArtistNavbar = () => {
       
       {/* Logo / Brand */}
       <div className="text-white font-bold text-xl tracking-wide">
-        🎵 Artist Studio
+        🎵 Sangeet Listener
       </div>
 
       {/* User Section */}

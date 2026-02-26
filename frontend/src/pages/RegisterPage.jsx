@@ -13,9 +13,7 @@ const RegisterPage = () => {
   const [registrationErr, setRegistrationErr] = useState(false);
   const submitHandler = async (e) => {
     e.preventDefault();
-    console.log(email, username, password, reEnteredPassword, role);
     if (password !== reEnteredPassword) {
-      console.log(password.length);
       setPassword("");
       setReEnteredPassword("");
       setError("Passwords do not match ❌");
@@ -38,12 +36,12 @@ const RegisterPage = () => {
       })
       .then(() => {
         alert("Register successfull");
-		navigate('/api/auth/login')
+		    navigate('/api/auth/login')
         setRegistrationErr(false);
         setEmail("");
         setPassword("");
         setReEnteredPassword("");
-        setRole("");
+        setRole("User");
         setUsername("");
       })
       .catch((err) => {
@@ -57,7 +55,7 @@ const RegisterPage = () => {
 		setEmail("");
         setPassword("");
         setReEnteredPassword("");
-        setRole("");
+        setRole("User");
         setUsername("");
       });
   };
