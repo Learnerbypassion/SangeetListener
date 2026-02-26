@@ -4,7 +4,7 @@ import ReactAudioPlayer from "react-audio-player";
 const MusicCards = ({
   title,
   uri,
-  artist = "Artist",
+  artist ,
   isPlaying = false,
   onEdit,
   onDelete,

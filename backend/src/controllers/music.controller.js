@@ -41,7 +41,7 @@ const addingMusic = async (req, res) => {
 
 
 const listOfMusic = async (req,res) =>{
-    const musics = await musicModel.find();
+    const musics = await musicModel.find().populate("artist", "username");
     res.send({
         message: "This are the musics",
         musics: musics

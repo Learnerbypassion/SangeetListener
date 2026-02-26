@@ -76,6 +76,7 @@ const ShowMusicPages = () => {
                 key={idx}
                 title={elem.title}
                 uri={elem.uri}
+                artist={elem.artist.username || "Artist"}
               />
             ))
           ) : (
