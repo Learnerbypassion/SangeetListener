@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import ArtistNavbar from "../components/ArtistNavbar";
+import { useNavigate } from "react-router-dom";
 
 const ArtistPage = () => {
   const [title, setTitle] = useState("");
@@ -8,7 +9,7 @@ const ArtistPage = () => {
   const [preview, setPreview] = useState("");
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
-
+  const navigate = useNavigate();
   const handleFileChange = (e) => {
     const audio = e.target.files[0];
     setFile(audio);
@@ -58,7 +59,7 @@ const ArtistPage = () => {
   return (
     <div className="h-screen">
       <ArtistNavbar />
-      <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-black via-gray-900 to-black ">
+      <div className="min-h-screen flex flex-col items-center justify-center bg-linear-to-br from-black via-gray-900 to-black ">
         <div className="bg-gray-800/60 backdrop-blur-lg shadow-xl rounded-2xl p-8 w-105 border border-gray-700">
           <h2 className="text-2xl font-bold text-center text-white mb-6">
             🎵 Upload New Music
