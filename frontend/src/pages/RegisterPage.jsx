@@ -29,7 +29,8 @@ const RegisterPage = () => {
     }
     setError("");
     axios
-      .post("http://localhost:3000/api/auth/register", {
+      .post("http://localhost:3000/api/auth/register", 
+        {
         username,
         email,
         password,

@@ -3,15 +3,15 @@ import userModel from "../models/user.model.js";
 import jwt from "jsonwebtoken"
 
 //Register api
-const registerUser = async (req, res)=>{
-    const {username, email , password, role='User'} = req.body
+const registerUser = async (req, res) => {
+    const { username, email, password, role = 'User' } = req.body
     const isUserAlreadyExists = await userModel.findOne({
         $or: [
-            {username},
-            {email}
+            { username },
+            { email }
         ]
     })
-    if(isUserAlreadyExists){
+    if (isUserAlreadyExists) {
         console.log("User already exists");
         return res.status(409).json({
             message: "User already exists"
@@ -21,7 +21,7 @@ const registerUser = async (req, res)=>{
     const user = await userModel.create({
         username,
         email,
-        password : hash,
+        password: hash,
         role
     })
 
@@ -39,17 +39,17 @@ const registerUser = async (req, res)=>{
 
 
 //Login api
-const loginUser = async (req, res) =>{
-    const {username, email, password} = req.body;
+const loginUser = async (req, res) => {
+    const { username, email, password } = req.body;
 
     //checking if there is any user or not
     const user = await userModel.findOne({
-        $or:[
-            {username},
-            {email}
+        $or: [
+            { username },
+            { email }
         ]
     })
-    if(!user){
+    if (!user) {
         return res.status(401).json({
             message: "Invalid Credentials! REGISTER NOW"
         })
@@ -57,13 +57,14 @@ const loginUser = async (req, res) =>{
 
     //checking if the given password is correct or not
     const isPasswordValid = await bcrypt.compare(password, user.password)
-    if(!isPasswordValid){
-        return res.status(409).json({message: "Invalid Password"})
+    if (!isPasswordValid) {
+        return res.status(409).json({ message: "Invalid Password" })
     }
     //sending the token to the client
     const token = jwt.sign({
         id: user._id,
-        role: user.role
+        role: user.role,
+        username: user.username
     }, process.env.JWT_SECRET)
     res.cookie("token", token);
 
@@ -74,11 +75,26 @@ const loginUser = async (req, res) =>{
         email: user.email,
         role: user.role
     })
-    console.log({ message: "Login successful",
+    console.log({
+        message: "Login successful",
         username: user.username,
         email: user.email,
-        role: user.role})
+        role: user.role
+    })
 }
 
+//Logout api
+const logoutUser = async (req, res) => {
+    res.clearCookie("token", {
+        httpOnly: true,
+        secure: false, // true in production (HTTPS)
+        sameSite: "lax",
+    });
 
-export default {registerUser, loginUser};
+    res.status(200).json({
+        message: "Logged out successfully",
+    });
+};
+
+
+export default { registerUser, loginUser, logoutUser };
