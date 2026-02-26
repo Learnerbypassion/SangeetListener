@@ -16,7 +16,7 @@ const App = () => {
         <Route
           path="/api/music/list-musics"
           element={
-            <ProtectedRoute role="User">
+            <ProtectedRoute roleArtist="Artist" roleUser="User">
               <ShowMusicPages />
             </ProtectedRoute>
           }
@@ -24,7 +24,7 @@ const App = () => {
         <Route
           path="/api/music/upload-music"
           element={
-            <ProtectedRoute role="Artist">
+            <ProtectedRoute roleArtist="Artist">
               <ArtistPage />
             </ProtectedRoute>
           }

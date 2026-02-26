@@ -15,10 +15,12 @@ const ProtectedRoute = ({ children, role }) => {
         );
 
         // if role required (Artist page)
-        if (role && res.data.user.role !== role) {
-          setAuthorized(false);
-        } else {
+       if (roleArtist && res.data.user.role === roleArtist) {
           setAuthorized(true);
+        } else if (roleUser && res.data.user.role === roleUser) {
+          setAuthorized(true);
+        } else {
+          setAuthorized(false);
         }
       } catch (err) {
         setAuthorized(false);
@@ -28,7 +30,7 @@ const ProtectedRoute = ({ children, role }) => {
     };
 
     verifyUser();
-  }, [role]);
+  }, [roleArtist, roleUser]);
 
    if (loading) {
   return (
