@@ -120,7 +120,7 @@ const ArtistPage = () => {
               bg-black border border-cyan-400
               shadow-[0_0_15px_#22d3ee]
               hover:shadow-[0_0_25px_#22d3ee]
-              hover:scale-105 transition-all duration-300"
+              hover:scale-105 transition-all duration-300 cursor-pointer"
         >
           <span
             className="relative font-bold tracking-widest text-transparent bg-clip-text
