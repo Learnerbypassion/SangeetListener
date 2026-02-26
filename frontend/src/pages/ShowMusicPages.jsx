@@ -10,7 +10,7 @@ const ShowMusicPages = () => {
     const fetchMusic = async () => {
       try {
         const res = await axios.get(
-          "http://localhost:3000/api/music/list-musics"
+          `${import.meta.env.VITE_BACKEND_URI}/api/music/list-musics`
         );
         setData(res.data.musics);
       } catch (error) {

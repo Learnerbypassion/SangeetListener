@@ -8,7 +8,7 @@ const ArtistNavbar = () => {
     const fetchUser = async () => {
       try {
         const res = await axios.get(
-          "http://localhost:3000/api/auth/verify",
+          `${import.meta.env.VITE_BACKEND_URI}/api/auth/verify`,
           { withCredentials: true }
         );
         setUserData(res.data.user);
@@ -22,7 +22,7 @@ const ArtistNavbar = () => {
   const handleLogout = async () => {
     try {
       await axios.post(
-        "http://localhost:3000/api/auth/logout",
+        `${import.meta.env.VITE_BACKEND_URI}/api/auth/logout`,
         {},
         { withCredentials: true }
       );

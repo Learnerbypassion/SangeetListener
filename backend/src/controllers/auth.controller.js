@@ -66,7 +66,11 @@ const loginUser = async (req, res) => {
         role: user.role,
         username: user.username
     }, process.env.JWT_SECRET)
-    res.cookie("token", token);
+    res.cookie("token", token, {
+        httpOnly: true,
+        secure: true,        // required for HTTPS (Render uses HTTPS)
+        sameSite: "none"     // required for cross-site cookies
+    });
 
 
     res.status(201).json({

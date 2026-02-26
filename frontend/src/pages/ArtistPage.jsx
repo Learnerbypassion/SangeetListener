@@ -34,7 +34,7 @@ const ArtistPage = () => {
       formData.append("music", file); // multer field name must be "music"
 
       const res = await axios.post(
-        "http://localhost:3000/api/music/upload-music",
+        `${import.meta.env.VITE_BACKEND_URI}/api/music/upload-music`,
         formData,
         {
           withCredentials: true, // VERY IMPORTANT (cookie JWT)

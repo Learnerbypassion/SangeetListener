@@ -1,6 +1,8 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 const LandingPage = () => {
+  console.log(import.meta.env.VITE_BACKEND_URI);
+  
   const navigate = useNavigate()
   return (
     <div className="relative w-full h-screen overflow-hidden flex justify-center items-center flex-col">

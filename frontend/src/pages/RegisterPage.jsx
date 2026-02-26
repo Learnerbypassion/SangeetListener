@@ -29,7 +29,7 @@ const RegisterPage = () => {
     }
     setError("");
     axios
-      .post("http://localhost:3000/api/auth/register", 
+      .post(`${import.meta.env.VITE_BACKEND_URI}/api/auth/register`, 
         {
         username,
         email,

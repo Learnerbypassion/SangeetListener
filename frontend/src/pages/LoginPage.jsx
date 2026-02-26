@@ -3,40 +3,39 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 const Login = () => {
   const [email, setEmail] = useState("");
-  const [username, setUsername] = useState("")
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const [role, setRole] = useState("")
+  const [role, setRole] = useState("");
   const navigate = useNavigate();
   const submitHandler = async (e) => {
     e.preventDefault();
     console.log("Form is submitted");
     axios
       .post(
-        "http://localhost:3000/api/auth/login",
+        `${import.meta.env.VITE_BACKEND_URI}/api/auth/login`,
         { username, email, password },
         { withCredentials: true },
       )
       .then((res) => {
         alert("Login Page");
-		setRole(res.data.role)
-		if(res.data.role === 'Artist'){
-			navigate("/api/music/upload-music");
-			console.log(role);
-			
-		}else{
-			console.log(role);
-      navigate("/api/music/list-musics");
-			setError("")
-		}
+        setRole(res.data.role);
+        if (res.data.role === "Artist") {
+          navigate("/api/music/upload-music");
+          console.log(role);
+        } else {
+          console.log(role);
+          navigate("/api/music/list-musics");
+          setError("");
+        }
         setEmail("");
         setPassword("");
       })
       .catch((err) => {
         if (err && err?.response.data?.message) {
           setError(err.response.data.message);
-        }else{
-          setError("Wrong Password or Email")
+        } else {
+          setError("Wrong Password or Email");
         }
       });
   };
@@ -72,9 +71,9 @@ const Login = () => {
               placeholder="Email/Username"
               value={email}
               onChange={(e) => {
-				setEmail(e.target.value);
-				setUsername(e.target.value);
-			}}
+                setEmail(e.target.value);
+                setUsername(e.target.value);
+              }}
             />
 
             <input
