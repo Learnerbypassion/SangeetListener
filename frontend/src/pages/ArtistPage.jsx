@@ -116,7 +116,7 @@ const ArtistPage = () => {
           onClick={() => {
             navigate("/api/music/list-musics");
           }}
-          className="text-lg font-semibold text-white w-1/4 mt-5 py-3 rounded-full
+          className="text-lg font-semibold text-white px-5 mt-5 py-3 rounded-full
               bg-black border border-cyan-400
               shadow-[0_0_15px_#22d3ee]
               hover:shadow-[0_0_25px_#22d3ee]
