@@ -30,7 +30,11 @@ const registerUser = async (req, res) => {
         role: user.role
     }, process.env.JWT_SECRET)
 
-    res.cookie("token", token)
+    res.cookie("token", token, {
+        httpOnly: true,
+        secure: true,        // required for HTTPS (Render uses HTTPS)
+        sameSite: "none"     // required for cross-site cookies
+    })
     res.status(201).json({
         message: "User registered successfully",
         user
@@ -92,7 +96,7 @@ const logoutUser = async (req, res) => {
     res.clearCookie("token", {
         httpOnly: true,
         secure: false, // true in production (HTTPS)
-        sameSite: "lax",
+        sameSite: "none",
     });
 
     res.status(200).json({
