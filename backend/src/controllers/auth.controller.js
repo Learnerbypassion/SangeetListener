@@ -36,11 +36,23 @@ const registerUser = async (req, res) => {
         secure: true,        // required for HTTPS (Render uses HTTPS)
         sameSite: "none"     // required for cross-site cookies
     })
+    // attempt to deliver welcome email before finalizing response
+    try {
+        await emailService.sendRegistrationEmail(user.email, user.username);
+    } catch (emailError) {
+        // log the failure and include a flag in the response; user is still created
+        console.error('registration email failed:', emailError);
+        return res.status(201).json({
+            message: "User registered successfully, but welcome email could not be sent",
+            user,
+            emailError: emailError.message || 'unknown'
+        });
+    }
+
     res.status(201).json({
         message: "User registered successfully",
         user
-    })
-    await emailService.sendRegistrationEmail(user.email, user.username)
+    });
 }
 
 
