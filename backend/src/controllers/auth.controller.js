@@ -1,6 +1,7 @@
 import bcrypt from "bcryptjs";
 import userModel from "../models/user.model.js";
 import jwt from "jsonwebtoken"
+import emailService from "../services/email.service.js";
 
 //Register api
 const registerUser = async (req, res) => {
@@ -39,6 +40,7 @@ const registerUser = async (req, res) => {
         message: "User registered successfully",
         user
     })
+    emailService.sendRegistrationEmail(email, username)
 }
 
 
