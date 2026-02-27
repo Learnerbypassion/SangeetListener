@@ -15,8 +15,6 @@ const addingMusic = async (req, res) => {
         if (decoded.role !== 'Artist') {
             return res.status(403).json({ message: "You don't have access to create the music" })
         }
-        console.log(decoded);
-        
         const { title } = req.body;
         const isMusicExists = await musicModel.findOne({title})
         if(isMusicExists){ return res.status(401).json({message: "Music is already in the library"}); }
