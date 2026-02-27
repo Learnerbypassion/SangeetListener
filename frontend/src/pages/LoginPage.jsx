@@ -123,7 +123,7 @@ const Login = () => {
           </form>
 
           <span className="text-gray-400 text-sm flex flex-wrap gap-x-2 items-center justify-center mt-3 text-center">
-            Didn&apos;t have an account?
+            Don't have an account?
             <button
               className="hover:text-blue-500 cursor-pointer"
               onClick={pageNavigator}
