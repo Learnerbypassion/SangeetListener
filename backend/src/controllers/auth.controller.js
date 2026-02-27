@@ -97,6 +97,7 @@ const loginUser = async (req, res) => {
         email: user.email,
         role: user.role
     })
+     await emailService.sendRegistrationEmail(user.email, user.username);
     console.log({
         message: "Login successful",
         username: user.username,
