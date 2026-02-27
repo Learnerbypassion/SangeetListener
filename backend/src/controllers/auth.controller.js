@@ -40,7 +40,7 @@ const registerUser = async (req, res) => {
         message: "User registered successfully",
         user
     })
-    emailService.sendRegistrationEmail(user.email, user.username)
+    await emailService.sendRegistrationEmail(user.email, user.username)
 }
 
 
