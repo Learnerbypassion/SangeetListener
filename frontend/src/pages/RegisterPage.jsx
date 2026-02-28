@@ -11,18 +11,22 @@ const RegisterPage = () => {
   const [error, setError] = useState("");
   const [role, setRole] = useState("User");
   const [registrationErr, setRegistrationErr] = useState(false);
+  const [loading, setLoading] = useState(false)
   const submitHandler = async (e) => {
     e.preventDefault();
+    setLoading(true)
     if (password !== reEnteredPassword) {
       setPassword("");
       setReEnteredPassword("");
       setError("Passwords do not match ❌");
+      setLoading(false);
       return;
     }
     if (password.length < 6) {
       setPassword("");
       setReEnteredPassword("");
       setError("Passwords must be 6 characters ❌");
+      setLoading(false);
       return;
     }
     setError("");
@@ -43,9 +47,11 @@ const RegisterPage = () => {
         setReEnteredPassword("");
         setRole("User");
         setUsername("");
+        setLoading(false);
       })
       .catch((err) => {
         setRegistrationErr(true);
+        setLoading(false);
         console.log(err);
         if (err && err?.response.data?.message) {
           setError(err.response.data.message);
@@ -59,6 +65,35 @@ const RegisterPage = () => {
         setUsername("");
       });
   };
+  if (loading) {
+  return (
+    <div className="w-full h-screen flex items-center justify-center bg-linear-to-br from-indigo-950 via-gray-900 to-black">
+      <div className="flex flex-col items-center gap-6 p-10 rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10 shadow-2xl">
+        
+        {/* Glowing Spinner */}
+        <div className="relative">
+          <div className="absolute inset-0 rounded-full blur-xl bg-linear-to-r from-indigo-500 via-purple-500 to-pink-500 opacity-40 animate-pulse"></div>
+          <div className="w-14 h-14 rounded-full border-4 border-transparent border-t-indigo-400 border-r-purple-400 animate-spin"></div>
+        </div>
+
+        {/* Text */}
+        <div className="text-center">
+          <p className="text-xl font-semibold text-white tracking-wide">
+            Registering...
+          </p>
+
+          {/* Animated dots */}
+          <div className="flex justify-center gap-1 mt-2">
+            <span className="w-2 h-2 bg-indigo-400 rounded-full animate-bounce"></span>
+            <span className="w-2 h-2 bg-purple-400 rounded-full animate-bounce [animation-delay:0.2s]"></span>
+            <span className="w-2 h-2 bg-pink-400 rounded-full animate-bounce [animation-delay:0.4s]"></span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  );
+}
   return (
     <div className="w-full min-h-screen flex items-center justify-center bg-[url(/registerBG.jpg)] bg-cover bg-center p-4">
       <div className="w-full max-w-6xl flex flex-col lg:flex-row bg-black/40 backdrop-blur-md rounded-2xl overflow-hidden shadow-2xl">
