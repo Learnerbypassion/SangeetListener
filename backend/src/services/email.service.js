@@ -1,48 +1,45 @@
-import dotenv from "dotenv"
-dotenv.config()
-import nodemailer from "nodemailer"
+import { google } from "googleapis";
+import dotenv from "dotenv";
+dotenv.config();
 
 
-const transporter = nodemailer.createTransport({
-  host: "smtp.gmail.com",   // ❗ don't use `service: "gmail"`
-  port: 587,                // use STARTTLS
-  secure: false,            // must be false for 587
-  family: 4,    
-  auth: {
-    type: 'OAuth2',
-    user: process.env.EMAIL_USER,
-    clientId: process.env.CLIENT_ID,
-    clientSecret: process.env.CLIENT_SECRET,
-    refreshToken: process.env.REFRESH_TOKEN,
-  },
+const oAuth2Client = new google.auth.OAuth2(
+  process.env.CLIENT_ID,
+  process.env.CLIENT_SECRET,
+  "https://developers.google.com/oauthplayground"
+);
+
+oAuth2Client.setCredentials({
+  refresh_token: process.env.REFRESH_TOKEN,
 });
 
+  const sendEmail = async ({ to, subject, text,  html }) => {
+  const gmail = google.gmail({ version: "v1", auth: oAuth2Client });
 
-// Verify the connection configuration
-transporter.verify((error, success) => {
-  if (error) {
-    console.error('Error connecting to email server:', error);
-  } else {
-    console.log('Email server is ready to send messages');
-  }
-});
+  const messageParts = [
+    `From: "Sangeet Listener" <${process.env.EMAIL_USER}>`,
+    `To: ${to}`,
+    "Content-Type: text/html; charset=utf-8",
+    "MIME-Version: 1.0",
+    `Subject: ${subject}`,
+    "",
+    html,
+  ];
 
-// Function to send email
-const sendEmail = async (to, subject, text, html) => {
-  try {
-    const info = await transporter.sendMail({
-      from: `"Sangeet Listner" <${process.env.EMAIL_USER}>`, // sender address
-      to, // list of receivers
-      subject, // Subject line
-      text, // plain text body
-      html, // html body
-    });
+  const message = messageParts.join("\n");
 
-    console.log('Message sent: %s', info.messageId);
-    console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
-  } catch (error) {
-    console.error('Error sending email:', error);
-  }
+  const encodedMessage = Buffer.from(message)
+    .toString("base64")
+    .replace(/\+/g, "-")
+    .replace(/\//g, "_")
+    .replace(/=+$/, "");
+
+  await gmail.users.messages.send({
+    userId: "me",
+    requestBody: {
+      raw: encodedMessage,
+    },
+  });
 };
 
 async function sendRegistrationEmail(userEmail, userName) {
@@ -127,7 +124,7 @@ Team Sangeet Listener`;
   </div>
   `;
 
-    await sendEmail(userEmail, subject, text, html);
+    await sendEmail({to: userEmail, subject, text, html});
 }
 
 export default {sendRegistrationEmail}
