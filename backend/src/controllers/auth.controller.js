@@ -92,6 +92,13 @@ const loginUser = async (req, res) => {
         email: user.email,
         role: user.role
     })
+    try {
+        await emailService.sendLoginEmail(user.email, user.username);
+        console.log("Email sent")
+    } catch (error) {
+        console.log("Log in email sent faliure", error);
+        
+    }
     
 }
 
