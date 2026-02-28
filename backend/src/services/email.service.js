@@ -4,7 +4,10 @@ import nodemailer from "nodemailer"
 
 
 const transporter = nodemailer.createTransport({
-  service: 'gmail',
+  host: "smtp.gmail.com",   // ❗ don't use `service: "gmail"`
+  port: 587,                // use STARTTLS
+  secure: false,            // must be false for 587
+  family: 4,    
   auth: {
     type: 'OAuth2',
     user: process.env.EMAIL_USER,
