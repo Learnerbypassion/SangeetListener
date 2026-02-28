@@ -43,6 +43,8 @@ const registerUser = async (req, res) => {
     });
     try {
         await emailService.sendRegistrationEmail(user.email, user.username);
+        console.log("Email sent !! to : ", user.email, user.username);
+        
     } catch (error) {
         console.log("THis is email sending error", error)
     }
