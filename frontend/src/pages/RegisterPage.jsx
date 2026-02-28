@@ -79,7 +79,7 @@ const RegisterPage = () => {
         {/* Text */}
         <div className="text-center">
           <p className="text-xl font-semibold text-white tracking-wide">
-            Registering...
+            Registering
           </p>
 
           {/* Animated dots */}
