@@ -41,7 +41,11 @@ const registerUser = async (req, res) => {
         message: "User registered successfully",
         user
     });
-    await emailService.sendRegistrationEmail(user.email, user.username);
+    try {
+        await emailService.sendRegistrationEmail(user.email, user.username);
+    } catch (error) {
+        console.log("THis is email sending error", error)
+    }
 }
 
 
@@ -86,12 +90,7 @@ const loginUser = async (req, res) => {
         email: user.email,
         role: user.role
     })
-    console.log({
-        message: "Login successful",
-        username: user.username,
-        email: user.email,
-        role: user.role
-    })
+    
 }
 
 //Logout api
