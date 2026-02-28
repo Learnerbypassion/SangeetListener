@@ -112,6 +112,7 @@ const ArtistPage = () => {
           </form>
         </div>
         <button
+          disabled={loading}
           type="button"
           onClick={() => {
             navigate("/api/music/list-musics");
