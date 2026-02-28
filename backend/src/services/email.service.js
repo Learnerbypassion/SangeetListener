@@ -188,12 +188,12 @@ Team Sangeet Listener`;
                 </p>
 
                 <p style="font-size:14px;color:#f87171;">
-                  If this wasn't you, please dm me cuz there is no feature to reset password😭(ল্যাদ লাগছে).
+                  If this wasn't you, please dm me, there is no feature to reset password😭<br/>(ল্যাদ লাগছে to add this feature).
                 </p>
 
                 <p style="margin-top:25px;font-size:15px;color:#e2e8f0;">
                   Stay secure,<br/>
-                  <strong style="color:#a5b4fc;">Soham, this side 😁 </br> Sangeet Listener 🎼</strong>
+                  <strong style="color:#a5b4fc;">Soham, this side 😁 <br/> Sangeet Listener 🎼</strong>
                 </p>
               </td>
             </tr>
