@@ -43,7 +43,7 @@ oAuth2Client.setCredentials({
 };
 
 async function sendRegistrationEmail(userEmail, userName) {
-    const subject = "🎧 Welcome to Sangeet Listener!";
+    const subject = " Welcome to Sangeet Listener!";
 
     const text = `Hi ${userName},
 
