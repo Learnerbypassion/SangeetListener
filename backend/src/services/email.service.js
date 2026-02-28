@@ -132,7 +132,7 @@ async function sendLoginEmail(userEmail, userName) {
     timeStyle: "short"
   });
 
-  const subject = "🔐 Login Alert - Sangeet Listener";
+  const subject = "Login Alert - Sangeet Listener";
 
   const text = `Hi ${userName},
 
@@ -193,7 +193,7 @@ Team Sangeet Listener`;
 
                 <p style="margin-top:25px;font-size:15px;color:#e2e8f0;">
                   Stay secure,<br/>
-                  <strong style="color:#a5b4fc;">Team Sangeet Listener 🎼</strong>
+                  <strong style="color:#a5b4fc;">Soham, this side 😁 </br> Sangeet Listener 🎼</strong>
                 </p>
               </td>
             </tr>
