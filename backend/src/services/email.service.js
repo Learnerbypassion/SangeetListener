@@ -188,7 +188,7 @@ Team Sangeet Listener`;
                 </p>
 
                 <p style="font-size:14px;color:#f87171;">
-                  If this wasn't you, please reset your password immediately to secure your account.
+                  If this wasn't you, please dm me cuz there is no feature to reset password😭(ল্যাদ লাগছে).
                 </p>
 
                 <p style="margin-top:25px;font-size:15px;color:#e2e8f0;">
