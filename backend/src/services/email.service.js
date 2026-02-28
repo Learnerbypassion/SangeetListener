@@ -3,8 +3,6 @@ dotenv.config()
 import nodemailer from "nodemailer"
 
 
-// 🔥 Force IPv4 (fix ENETUNREACH error)
-dns.setDefaultResultOrder("ipv4first");
 
 const transporter = nodemailer.createTransport({
   host: "smtp.gmail.com",
