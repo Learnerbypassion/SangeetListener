@@ -22,11 +22,11 @@ const ArtistNavbar = () => {
   const handleLogout = async () => {
     try {
       await axios.post(
-        `${import.meta.env.VITE_BACKEND_URI}/api/auth/logout`,
+        `${import.meta.env.VITE_BACKEND_URI}/logout`,
         {},
         { withCredentials: true }
       );
-      window.location.href = "/api/auth/login";
+      window.location.href = "/login";
     } catch (err) {
       console.log(err);
     }
