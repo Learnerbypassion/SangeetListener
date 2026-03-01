@@ -22,7 +22,7 @@ const ArtistNavbar = () => {
   const handleLogout = async () => {
     try {
       await axios.post(
-        `${import.meta.env.VITE_BACKEND_URI}/logout`,
+        `${import.meta.env.VITE_BACKEND_URI}/api/auth/logout`,
         {},
         { withCredentials: true }
       );
