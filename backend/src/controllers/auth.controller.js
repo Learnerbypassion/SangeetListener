@@ -80,6 +80,11 @@ const loginUser = async (req, res) => {
             message: "Invalid Credentials! REGISTER NOW"
         })
     }
+    if(!user.isVerified){
+        return res.status(400).json({
+            message: "User is not Verified"
+        })
+    }
 
     //checking if the given password is correct or not
     const isPasswordValid = await bcrypt.compare(password, user.password)
