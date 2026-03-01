@@ -1,4 +1,3 @@
-import e from "express";
 import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema({
@@ -20,7 +19,10 @@ const userSchema = new mongoose.Schema({
         type: String,
         enum: ["User", "Artist"],
         default: "User"
-    }
+    },
+    otp: String,
+    isVerified:{type: Boolean, default: false} ,
+    otpExpiry: Date,
 })
 
 const userModel = mongoose.model("user", userSchema);

@@ -9,13 +9,14 @@ import cors from "cors"
 const app = express();
 app.use(express.json());
 app.use(cors({
-    origin: "https://sangeetlistener.netlify.app",
+    origin:[ "https://sangeetlistener.netlify.app", "http://localhost:5137"],
     credentials: true
 }))
 app.use(cookieParser())
 app.use('/api/auth', authRoutes);
 app.use('/api/music', musicRoutes);
-app.get('/api/auth/verify', verifyRoutes)
+app.get('/api/auth/verify', verifyRoutes.verifyUser)
+app.post('/api/auth/verify-otp', verifyRoutes.verifyOtp)
 
 
 

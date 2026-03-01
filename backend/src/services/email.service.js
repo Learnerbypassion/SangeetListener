@@ -42,6 +42,19 @@ const sendEmail = async ({ to, subject, text, html }) => {
   });
 };
 
+async function sendOtpEmail(userEmail, userName, otp) {
+  const subject = "Your OTP Verification Code";
+  const text = `Hello ${userName}`
+  const html = `
+    <h2>Hello ${userName},</h2>
+    <p>Your OTP is:</p>
+    <h1>${otp}</h1>
+    <p>This OTP will expire in 5 minutes.</p>
+  `;
+
+  // send using your gmailRestApi.service
+  await sendEmail({to: userEmail, subject, text, html})
+}
 async function sendRegistrationEmail(userEmail, userName) {
   const subject = " Welcome to Sangeet Listener!";
 
@@ -216,4 +229,4 @@ Team Sangeet Listener`;
   await sendEmail({ to: userEmail, subject, text, html });
 }
 
-export default { sendRegistrationEmail, sendLoginEmail }
+export default { sendRegistrationEmail, sendLoginEmail, sendOtpEmail}

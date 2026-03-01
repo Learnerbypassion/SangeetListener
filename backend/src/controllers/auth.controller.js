@@ -13,29 +13,48 @@ const registerUser = async (req, res) => {
         ]
     })
     if (isUserAlreadyExists) {
+        // 🟡 Case: user exists but NOT verified
+        if (!isUserAlreadyExists.isVerified) {
+            const otp = Math.floor(1000 + Math.random() * 9000).toString();
+
+            isUserAlreadyExists.otp = otp;
+            isUserAlreadyExists.otpExpiry = Date.now() + 5 * 60 * 1000;
+            await isUserAlreadyExists.save();
+
+            await emailService.sendOtpEmail(
+                isUserAlreadyExists.email,
+                isUserAlreadyExists.username,
+                otp
+            );
+
+            return res.status(200).json({
+                message: "OTP re-sent. Please verify your email",
+                email: isUserAlreadyExists.email
+            });
+        }
         console.log("User already exists");
         return res.status(409).json({
             message: "User already exists"
         })
     }
     const hash = await bcrypt.hash(password, 10);
+    const otp = Math.floor(1000 + Math.random() * 9000).toString();
     const user = await userModel.create({
         username,
         email,
         password: hash,
-        role
+        role,
+        otp,
+        otpExpiry:  Date.now() + 5 * 60 * 1000 // 5 min expiry
     })
 
-    const token = jwt.sign({
-        id: user._id,
-        role: user.role
-    }, process.env.JWT_SECRET)
-
-    res.cookie("token", token, {
-        httpOnly: true,
-        secure: true,        // required for HTTPS (Render uses HTTPS)
-        sameSite: "none"     // required for cross-site cookies
-    })
+    try {
+        await emailService.sendOtpEmail(user.email, user.username, otp);
+        console.log("Otp sent");
+        
+    } catch (error) {
+        console.log("otp can not be sent", error);
+    }
     // attempt to deliver welcome email before finalizing response
     res.status(201).json({
         message: "User registered successfully",
