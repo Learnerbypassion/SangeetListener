@@ -45,7 +45,7 @@ const RegisterPage = () => {
         role,
       })
       .then(() => {
-        alert("Register successfull");
+        alert("Verify the otp sent to your email");
 		    navigate('/verify-otp', { state: { email } })
         setRegistrationErr(false);
         setEmail("");
