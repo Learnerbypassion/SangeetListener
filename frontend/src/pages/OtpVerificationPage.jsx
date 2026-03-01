@@ -50,7 +50,7 @@ const OtpVerificationPage = () => {
       );
 
       setSuccess("OTP verified successfully!");
-      setTimeout(() => navigate("/login"), 1500);
+      setTimeout(() => navigate("api/auth/login"), 1500);
     } catch (err) {
       setError(
         err.response?.data?.message || "Invalid OTP or OTP expired"
