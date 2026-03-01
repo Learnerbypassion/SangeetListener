@@ -29,6 +29,12 @@ const RegisterPage = () => {
       setLoading(false);
       return;
     }
+    if(/\s/.test(password)){
+      setPassword("");
+      setReEnteredPassword("");
+      setError("Passwords should not contain spaces ❌");
+      return;
+    }
     setError("");
     axios
       .post(`${import.meta.env.VITE_BACKEND_URI}/api/auth/register`, 
