@@ -47,7 +47,7 @@ const RegisterPage = () => {
       .then(() => {
         setLoading(false);
         alert("Verify the otp sent to your email");
-		    navigate('api/auth/verify-otp', { state: { email } })
+		    navigate('/verify-otp', { state: { email } })
         setRegistrationErr(false);
         setEmail("");
         setPassword("");

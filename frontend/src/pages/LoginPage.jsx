@@ -22,11 +22,11 @@ const Login = () => {
         alert("Login Page");
         setRole(res.data.role);
         if (res.data.role === "Artist") {
-          navigate("/api/music/upload-music");
+          navigate("/upload-music");
           console.log(role);
         } else {
           console.log(role);
-          navigate("/api/music/list-musics");
+          navigate("/list-musics");
           setError("");
         }
         setEmail("");
@@ -45,7 +45,7 @@ const Login = () => {
   };
 
   const pageNavigator = async () => {
-    navigate("/api/auth/register");
+    navigate("/register");
   };
   if (loading) {
   return (

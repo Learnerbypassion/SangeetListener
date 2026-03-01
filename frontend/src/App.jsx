@@ -12,11 +12,11 @@ const App = () => {
     <Router>
       <Routes>
         <Route path="/" element={<LandingPage />} />
-        <Route path="/api/auth/login" element={<Login />} />
-        <Route path="/api/auth/register" element={<RegisterPage />} />
-        <Route path="/api/auth/verify-otp" element={<OtpVerificationPage />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<RegisterPage />} />
+        <Route path="/verify-otp" element={<OtpVerificationPage />} />
         <Route
-          path="/api/music/list-musics"
+          path="/list-musics"
           element={
             <ProtectedRoute roleArtist="Artist" roleUser="User">
               <ShowMusicPages />
@@ -24,7 +24,7 @@ const App = () => {
           }
         />
         <Route
-          path="/api/music/upload-music"
+          path="/upload-music"
           element={
             <ProtectedRoute roleArtist="Artist">
               <ArtistPage />

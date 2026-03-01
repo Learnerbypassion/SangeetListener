@@ -32,7 +32,7 @@ const LandingPage = () => {
       <button
       className="relative border-2 border-white border-double rounded-4xl mt-5 bg-transparent p-2 px-4 text-white z-20 text-2xl cursor-pointer translate-y-50 hover:scale-105 transition-transform duration-100"
       onClick={()=>{
-        navigate("/api/auth/login");
+        navigate("/login");
       }}
       ><span className="font-[Playfair_Display] font-bold">Sign Up</span></button>
     </div>

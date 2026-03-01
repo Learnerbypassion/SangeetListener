@@ -62,7 +62,7 @@ const ProtectedRoute = ({ children, roleArtist , roleUser }) => {
   );
 }
 
-  return authorized ? children : <Navigate to="/api/auth/login" />;
+  return authorized ? children : <Navigate to="/login" />;
 };
 
 export default ProtectedRoute;
