@@ -6,6 +6,7 @@ import LandingPage from "./pages/LandingPage";
 import ShowMusicPages from "./pages/ShowMusicPages";
 import ArtistPage from "./pages/ArtistPage";
 import ProtectedRoute from "./components/ProtectedRoutes";
+import OtpVerificationPage from "./pages/OtpVerificationPage";
 const App = () => {
   return (
     <Router>
@@ -13,6 +14,7 @@ const App = () => {
         <Route path="/" element={<LandingPage />} />
         <Route path="/api/auth/login" element={<Login />} />
         <Route path="/api/auth/register" element={<RegisterPage />} />
+        <Route path="/api/auth/verify-otp" element={<OtpVerificationPage />} />
         <Route
           path="/api/music/list-musics"
           element={
