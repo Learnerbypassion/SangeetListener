@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 import userModel from "../models/user.model.js";
 import emailService from "../services/email.service.js";
 
- const verifyUser = (req, res) => {
+const verifyUser = (req, res) => {
   const token = req.cookies.token;
   if (!token) return res.status(401).json({ message: "Unauthorized" });
 
@@ -46,13 +46,17 @@ const verifyOtp = async (req, res) => {
       role: user.role,
       username: user.username
     },
-    process.env.JWT_SECRET
+    process.env.JWT_SECRET,
+    {expiresIn: "3d"}
   );
+
+  const isProduction = true;
 
   res.cookie("token", token, {
     httpOnly: true,
-    sameSite: "lax",
-    secure: false // true in production
+    sameSite: isProduction ? "none" : "lax",
+    secure: isProduction, // must be true in production (HTTPS)
+    maxAge: 3 * 24 * 60 * 60 * 1000 // optional: 7 days
   });
 
   // 🎉 Send welcome email (optional)
