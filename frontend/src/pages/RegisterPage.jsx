@@ -14,7 +14,6 @@ const RegisterPage = () => {
   const [loading, setLoading] = useState(false)
   const submitHandler = async (e) => {
     e.preventDefault();
-    setLoading(true)
     if (password !== reEnteredPassword) {
       setPassword("");
       setReEnteredPassword("");
@@ -35,6 +34,7 @@ const RegisterPage = () => {
       setError("Passwords should not contain spaces ❌");
       return;
     }
+    setLoading(true);
     setError("");
     axios
       .post(`${import.meta.env.VITE_BACKEND_URI}/api/auth/register`, 
