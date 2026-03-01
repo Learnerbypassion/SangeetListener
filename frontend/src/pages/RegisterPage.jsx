@@ -45,6 +45,7 @@ const RegisterPage = () => {
         role,
       })
       .then(() => {
+        setLoading(false);
         alert("Verify the otp sent to your email");
 		    navigate('/verify-otp', { state: { email } })
         setRegistrationErr(false);
@@ -53,7 +54,6 @@ const RegisterPage = () => {
         setReEnteredPassword("");
         setRole("User");
         setUsername("");
-        setLoading(false);
       })
       .catch((err) => {
         setRegistrationErr(true);
