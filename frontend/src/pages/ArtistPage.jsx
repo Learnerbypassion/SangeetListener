@@ -115,7 +115,7 @@ const ArtistPage = () => {
           disabled={loading}
           type="button"
           onClick={() => {
-            navigate("/api/music/list-musics");
+            navigate("/list-musics");
           }}
           className="text-lg font-semibold text-white px-5 mt-5 py-3 rounded-full
               bg-black border border-cyan-400
