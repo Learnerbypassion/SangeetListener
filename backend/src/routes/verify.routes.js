@@ -23,12 +23,10 @@ const verifyOtp = async (req, res) => {
     return res.status(404).json({ message: "User not found" });
   }
 
-  // ❌ Wrong OTP
   if (user.otp !== otp) {
     return res.status(400).json({ message: "Invalid OTP" });
   }
 
-  // ⏰ Expired OTP
   if (!user.otpExpiry || user.otpExpiry < Date.now()) {
     return res.status(400).json({ message: "OTP expired" });
   }
@@ -39,7 +37,6 @@ const verifyOtp = async (req, res) => {
   user.otpExpiry = null;
   await user.save();
 
-  // 🔐 Create token AFTER verification
   const token = jwt.sign(
     {
       id: user._id,
@@ -59,14 +56,12 @@ const verifyOtp = async (req, res) => {
     maxAge: 3 * 24 * 60 * 60 * 1000 // optional: 7 days
   });
 
-  // 🎉 Send welcome email (optional)
   try {
     await emailService.sendRegistrationEmail(user.email, user.username);
   } catch (err) {
     console.log("Registration email error:", err);
   }
 
-  // ❌ Do NOT send full user object
   res.status(200).json({
     message: "Email verified & account activated",
     username: user.username,

@@ -24,6 +24,7 @@ const RegisterPage = () => {
     if (password.length < 6) {
       setPassword("");
       setReEnteredPassword("");
+
       setError("Passwords must be 6 characters ❌");
       setLoading(false);
       return;
@@ -64,7 +65,7 @@ const RegisterPage = () => {
         } else {
           setError("Re-register");
         }
-		setEmail("");
+		    setEmail("");
         setPassword("");
         setReEnteredPassword("");
         setRole("User");

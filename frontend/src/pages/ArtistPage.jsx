@@ -15,7 +15,7 @@ const ArtistPage = () => {
     setFile(audio);
 
     if (audio) {
-      setPreview(URL.createObjectURL(audio)); // audio preview
+      setPreview(URL.createObjectURL(audio));
     }
   };
 
@@ -32,13 +32,13 @@ const ArtistPage = () => {
 
       const formData = new FormData();
       formData.append("title", title);
-      formData.append("music", file); // multer field name must be "music"
+      formData.append("music", file); 
 
       const res = await axios.post(
         `${import.meta.env.VITE_BACKEND_URI}/api/music/upload-music`,
         formData,
         {
-          withCredentials: true, // VERY IMPORTANT (cookie JWT)
+          withCredentials: true,
           headers: {
             "Content-Type": "multipart/form-data",
           },
