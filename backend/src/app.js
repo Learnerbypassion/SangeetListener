@@ -12,7 +12,7 @@ import cors from "cors"
 const app = express();
 app.use(express.json());
 app.use(cors({
-    origin: ["https://sangeetlistener.netlify.app", "http://localhost:5173", "http://localhost:3000"],
+    origin: ["https://sangeetlistener.netlify.app"],
     credentials: true
 }))
 app.use(cookieParser())
