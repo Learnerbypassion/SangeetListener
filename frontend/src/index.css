@@ -1,9 +1,236 @@
 @import "tailwindcss";
-@keyframes shine {
+
+@theme {
+  --color-primary: #f4c32f;
+  --color-background-dark: #221e10;
+  --color-surface-dark: #2d291e;
+  --color-border-dark: #393528;
+  --color-background-light: #f8f8f5;
+  --color-surface-light: #ffffff;
+  --color-charcoal: #1a1814;
+  --font-family-sans: 'Spline Sans', sans-serif;
+}
+
+/* ── Base ───────────────────────────────────── */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Spline Sans', sans-serif;
+  background-color: #221e10;
+  color: #e2e8f0;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── Cursor rules (Fix 3A) ──────────────────── */
+button,
+a,
+[role="button"],
+label[for],
+input[type="checkbox"],
+input[type="radio"],
+select,
+.cursor-clickable {
+  cursor: pointer;
+}
+
+button:disabled,
+[disabled] {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.dropzone {
+  cursor: copy;
+}
+
+/* ── Scrollbar ──────────────────────────────── */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #221e10;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #393528;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #f4c32f;
+}
+
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* ── Material Symbols ───────────────────────── */
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  user-select: none;
+}
+
+/* ── Animations ─────────────────────────────── */
+@keyframes shimmer {
   0% {
-    background-position: -200% center;
+    background-position: -200% 0;
   }
+
   100% {
-    background-position: 200% center;
+    background-position: 200% 0;
   }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse-glow {
+
+  0%,
+  100% {
+    box-shadow: 0 0 8px rgba(244, 195, 47, 0.3);
+  }
+
+  50% {
+    box-shadow: 0 0 20px rgba(244, 195, 47, 0.6);
+  }
+}
+
+@keyframes fadeSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-shimmer {
+  background: linear-gradient(90deg, #2d291e 25%, #393528 50%, #2d291e 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-out;
+}
+
+.animate-slide-up {
+  animation: slideUp 0.5s ease-out;
+}
+
+/* ── Page entrance animation (Fix 3D) ───────── */
+.page-enter {
+  animation: fadeSlideUp 0.25s ease-out both;
+}
+
+/* ── Waveform bars animation ────────────────── */
+@keyframes wave {
+
+  0%,
+  100% {
+    height: 8px;
+  }
+
+  50% {
+    height: 24px;
+  }
+}
+
+.waveform-bar {
+  width: 3px;
+  background: #f4c32f;
+  border-radius: 2px;
+  animation: wave 1.2s ease-in-out infinite;
+}
+
+/* ── Focus visible for keyboard accessibility ── */
+*:focus-visible {
+  outline: 2px solid #f4c32f;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* ── Tooltips (Feature 6) ──────────────────── */
+/* Only add relative if the element doesn't already have absolute positioning */
+[data-tooltip]:not(.absolute) {
+  position: relative;
+}
+
+[data-tooltip]::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: #1a1814;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+  padding: 5px 10px;
+  border-radius: 6px;
+  border: 1px solid #393528;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+  z-index: 999;
+}
+
+[data-tooltip]:hover::after {
+  opacity: 1;
+}
+
+/* ── SongCard now-playing bars ─────────────── */
+@keyframes barBounce {
+  from {
+    height: 30%;
+  }
+
+  to {
+    height: 100%;
+  }
+}
+
+/* ── Lyrics mask (Feature 3) ───────────────── */
+.lyrics-mask {
+  mask-image: linear-gradient(to bottom, transparent, black 15%, black 85%, transparent);
+  -webkit-mask-image: linear-gradient(to bottom, transparent, black 15%, black 85%, transparent);
 }

@@ -5,12 +5,20 @@ const ImageKitClient = new ImageKit({
     privateKey: process.env.IMAGEKIT_PRIVATE_KEY || privateKey
 })
 
-const uploadMusic = async (file)=>{
+const uploadMusic = async (file) => {
     const result = await ImageKitClient.files.upload({
         file: file.toString("base64"),
-        fileName:"music.mp3" + Date.now()
+        fileName: "music.mp3" + Date.now()
     })
     return result;
 }
 
-export  {uploadMusic};
+const uploadImage = async (file) => {
+    const result = await ImageKitClient.files.upload({
+        file: file.toString("base64"),
+        fileName: "cover_" + Date.now() + ".jpg"
+    })
+    return result;
+}
+
+export { uploadMusic, uploadImage };
