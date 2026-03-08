@@ -5,62 +5,78 @@ import emailService from "../services/email.service.js";
 
 //Register api
 const registerUser = async (req, res) => {
-    const { username, email, password, role = 'User' } = req.body
-    const isUserAlreadyExists = await userModel.findOne({
-        $or: [
-            { username },
-            { email }
-        ]
-    })
-    if (isUserAlreadyExists) {
-        // 🟡 Case: user exists but NOT verified
-        if (!isUserAlreadyExists.isVerified) {
-            const otp = Math.floor(1000 + Math.random() * 9000).toString();
-
-            isUserAlreadyExists.otp = otp;
-            isUserAlreadyExists.otpExpiry = Date.now() + 5 * 60 * 1000;
-            await isUserAlreadyExists.save();
-
-            await emailService.sendOtpEmail(
-                isUserAlreadyExists.email,
-                isUserAlreadyExists.username,
-                otp
-            );
-
-            return res.status(200).json({
-                message: "OTP re-sent. Please verify your email",
-                email: isUserAlreadyExists.email
-            });
-        }
-        console.log("User already exists");
-        return res.status(409).json({
-            message: "User already exists"
-        })
-    }
-    const hash = await bcrypt.hash(password, 10);
-    const otp = Math.floor(1000 + Math.random() * 9000).toString();
-    const user = await userModel.create({
-        username,
-        email,
-        password: hash,
-        role,
-        otp,
-        otpExpiry:  Date.now() + 5 * 60 * 1000 // 5 min expiry
-    })
-
     try {
-        await emailService.sendOtpEmail(user.email, user.username, otp);
-        console.log("Otp sent");
-        
+        const { username, email, password, role = 'User' } = req.body
+        const isUserAlreadyExists = await userModel.findOne({
+            $or: [
+                { username },
+                { email }
+            ]
+        })
+        if (isUserAlreadyExists) {
+            // 🟡 Case: user exists but NOT verified
+            if (!isUserAlreadyExists.isVerified) {
+                const otp = Math.floor(1000 + Math.random() * 9000).toString();
+
+                isUserAlreadyExists.username = username;
+                isUserAlreadyExists.email = email;
+                isUserAlreadyExists.password = await bcrypt.hash(password, 10);
+                isUserAlreadyExists.role = role;
+                isUserAlreadyExists.otp = otp;
+                isUserAlreadyExists.otpExpiry = Date.now() + 5 * 60 * 1000;
+
+                try {
+                    await isUserAlreadyExists.save();
+                } catch (err) {
+                    return res.status(409).json({ message: "Email or Username already taken." });
+                }
+
+                try {
+                    await emailService.sendOtpEmail(
+                        isUserAlreadyExists.email,
+                        isUserAlreadyExists.username,
+                        otp
+                    );
+                } catch (err) {
+                    console.error("Failed to send OTP email. Developer fallback OTP:", otp);
+                }
+
+                return res.status(200).json({
+                    message: "OTP re-sent. Please verify your email",
+                    email: isUserAlreadyExists.email
+                });
+            }
+            console.log("User already exists");
+            return res.status(409).json({
+                message: "User already exists"
+            })
+        }
+        const hash = await bcrypt.hash(password, 10);
+        const otp = Math.floor(1000 + Math.random() * 9000).toString();
+        const user = await userModel.create({
+            username,
+            email,
+            password: hash,
+            role,
+            otp,
+            otpExpiry: Date.now() + 5 * 60 * 1000 // 5 min expiry
+        })
+
+        try {
+            await emailService.sendOtpEmail(user.email, user.username, otp);
+            console.log("Otp sent");
+        } catch (error) {
+            console.error("otp can not be sent. Developer fallback OTP:", otp, error.message);
+        }
+        // attempt to deliver welcome email before finalizing response
+        res.status(201).json({
+            message: "User registered successfully",
+            user
+        });
     } catch (error) {
-        console.log("otp can not be sent", error);
+        console.error("Register Error:", error);
+        res.status(500).json({ message: error.message || "Internal Server Error" });
     }
-    // attempt to deliver welcome email before finalizing response
-    res.status(201).json({
-        message: "User registered successfully",
-        user
-    });
-    
 }
 
 
@@ -80,7 +96,7 @@ const loginUser = async (req, res) => {
             message: "Invalid Credentials! REGISTER NOW"
         })
     }
-    if(!user.isVerified){
+    if (!user.isVerified) {
         return res.status(400).json({
             message: "User is not Verified"
         })
@@ -97,10 +113,11 @@ const loginUser = async (req, res) => {
         role: user.role,
         username: user.username
     }, process.env.JWT_SECRET)
+    const isProduction = process.env.NODE_ENV === 'production';
     res.cookie("token", token, {
         httpOnly: true,
-        secure: true,        // required for HTTPS (Render uses HTTPS)
-        sameSite: "none"     // required for cross-site cookies
+        secure: isProduction,
+        sameSite: isProduction ? "none" : "lax"
     });
 
 
@@ -115,9 +132,9 @@ const loginUser = async (req, res) => {
         console.log("Email sent")
     } catch (error) {
         console.log("Log in email sent faliure", error);
-        
+
     }
-    
+
 }
 
 //Logout api
