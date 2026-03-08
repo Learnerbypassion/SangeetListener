@@ -37,7 +37,7 @@ export default function AccountSettings() {
                 <div className="lg:col-span-4 space-y-6">
                     {/* Profile card */}
                     <div className="bg-surface-dark rounded-2xl border border-border-dark p-8 text-center">
-                        <div className="w-32 h-32 md:w-40 md:h-40 rounded-full mx-auto mb-4 bg-gradient-to-br from-primary to-primary/50 p-[3px]">
+                        <div className="w-32 h-32 md:w-40 md:h-40 rounded-full mx-auto mb-4 bg-linear-to-br from-primary to-primary/50 p-0.75">
                             <div className="w-full h-full rounded-full bg-surface-dark overflow-hidden flex items-center justify-center">
                                 {profile.avatarUrl ? (
                                     <img src={profile.avatarUrl} alt="Avatar" className="w-full h-full object-cover" />
