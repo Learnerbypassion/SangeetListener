@@ -38,7 +38,7 @@ export function EditSongModal({ song, onClose, onSaved }) {
         try {
             const songId = song._id || song.id;
             const res = await fetch(`/api/music/${songId}`, {
-                method: "PUT",
+                method: "PATCH",
                 credentials: "include",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(form),
