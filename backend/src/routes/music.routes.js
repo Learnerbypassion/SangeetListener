@@ -13,7 +13,7 @@ router.post('/upload-music', upload.fields([
     { name: 'image', maxCount: 1 }
 ]), musicController.addingMusic)
 router.get('/list-musics', musicController.listMusic)
-router.put('/:id', musicController.updateMusic)
+router.patch('/:id', musicController.updateMusic)
 router.post('/:id/cover', upload.single("cover"), musicController.uploadCoverArt)
 router.delete('/:id', musicController.deleteMusic)
 router.post('/:id/play', musicController.recordPlay)
